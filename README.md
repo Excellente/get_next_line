@@ -1,2 +1,2 @@
-# mod1
-algorithms and graphics project focusing on creating simple landscapes and water simulation
+# get_next_line
+a file reader that returns file contents line by line.
