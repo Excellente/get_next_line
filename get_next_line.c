@@ -6,7 +6,7 @@
 /*   By: emsimang <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/01 08:40:05 by emsimang          #+#    #+#             */
-/*   Updated: 2016/11/01 08:42:03 by emsimang         ###   ########.fr       */
+/*   Updated: 2016/11/01 09:22:10 by emsimang         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int		ft_last_buff(int *i, int *last, char buff[], char **line)
 	return (0);
 }
 
-int		get_next_line(int fd, char **line)
+int		get_next_line(const int fd, char **line)
 {
 	int				i;
 	int				ret;
