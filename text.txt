@@ -1,0 +1,16 @@
+Again, additions to this file from the previous example are in blue text
+
+The first change sets the variable EXTRATARGETS to _common if that directory exists, or empty if it doesn’t. If you are using a different method of determining the value of $(EXTRATARGETS) you can change this line (or, leave it out if the source makefile is setting it for you).
+
+Next, we include the value of $(EXTRATARGETS) (if any) as a phony target to be built, and use the same sub-make invocation rule for building it as we use for $(OBJDIR).
+
+Next we declare a dependency relationship between $(OBJDIR) and $(EXTRATARGETS) (if it exists) to ensure that $(EXTRATARGETS) is built first; in our environment that’s what we want since $(OBJDIR) depends on the results of that build. If your situation is different, you can omit or modify this line. However, if there is a dependency between these two you must declare it. Otherwise, make might do the wrong thing, especially in the presence of a parallel build situation.
+
+We add $(EXTRATARGETS) to the prerequisite line for the match-anything rule. In this case, since we declared the dependency relationship above, we could have omitted this and achieved the same result.
+
+Finally, if $(EXTRATARGETS) exists we remove its contents during the clean rule. Remember that in this scenario the presence or absence of the _common directory is what notifies us that there is an extra target directory, so we must be careful not to remove the directory itself, only its contents. The if-statement will expand to an empty string if $(EXTRATARGETS) doesn’t exist.
+Sample Implementation
+
+You can download a very small sample implementation of the above method right here. Uncompress and untar the file, then change to the example directory and run make.
+
+This trivial example merely transforms a version.c.in file into an _common/version.c file, using sed to install a version number. Then it creates an executable in the target directory:

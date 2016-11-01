@@ -1,0 +1,54 @@
+#define BUFF_SIZE 999
+#include <stdio.h>
+#include "get_next_line.h"
+
+void	ft_init(t_state *l)
+{
+	l->i = 0;
+	l->last = 0;
+}
+
+int	ft_has_new_line(char *buff)
+{
+	int	index;
+
+	index = 0;
+	while (buff[index] != '\0')
+	{
+		if (buff[index] == '\n')
+			return (1);
+		index++;
+	}
+	return (0);
+}
+
+int	get_next_line(int fd, char **line)
+{
+	t_state	state;
+
+	ft_init(&state);
+	while ((state.ret = read(fd, state.buff, BUFF_SIZE)) > 0)
+	{
+		if (!ft_has_new_line(state.buff))
+			ft_strjoin(*line, state.buff);
+		else
+		{
+			while (state.buff[state.i] != '\n')
+				line[0][state.i] = state.buff[state.i];
+			return (state.ret);
+		}
+		state.i++;
+	}
+}
+
+int main(int ac, char **av)
+{
+	int	fd;
+	int	ret;
+	char	*line;
+
+	if ((fd = open("text.txt", O_RDONLY)) <= 0)
+		write(2, "failed to open file!", 20);
+	ret = get_next_line(fd, &line);
+	return (0);
+}
